@@ -13,7 +13,7 @@ const DEPT_NAV_LINKS = [
   { label: "HOD Desk", emoji: "🧑‍💼", section: "hod-desk" },
   { label: "About Department", emoji: "💻", section: "about-department" },
   { label: "Vision & Mission", emoji: "👁️", section: "vision-mission" },
-  { label: "CO · PO · PSO", emoji: "📋", section: "co-po-pso" },
+  { label: "PO · PSO · PEO", emoji: "📋", section: "po-pso-peo" },
   { label: "Faculty", emoji: "👨‍🏫", section: "faculty" },
   { label: "Infrastructure", emoji: "🏢", section: "infrastructure" },
   { label: "Syllabus", emoji: "📖", section: "syllabus" },
@@ -32,8 +32,15 @@ function ensureFontAwesome() {
 function buildSidebarMarkup(title) {
   const dept = document.body.dataset.department;
   let linksList = [...DEPT_NAV_LINKS];
+  if (dept === "aiml") {
+    linksList = linksList.filter((item) =>
+      item.section === "hod-desk" ||
+      item.section === "about-department" ||
+      item.section === "syllabus"
+    );
+  }
   if (dept === "ge") {
-    linksList = linksList.filter((item) => item.section !== "co-po-pso");
+    linksList = linksList.filter((item) => item.section !== "po-pso-peo");
   }
   if (dept === "it" || dept === "ce") {
     linksList.push({ label: "Student Activity", emoji: "🏃", section: "student-activity" });

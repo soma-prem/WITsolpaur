@@ -45,7 +45,7 @@ const departmentSectionGroups = [
     ["HOD Desk", "#hod-desk"],
     ["About Department", "#about-department"],
     ["Vision & Mission", "#vision-mission"],
-    ["CO · PO · PSO · PEO", "#co-po-pso"],
+    ["PO · PSO · PEO", "#po-pso-peo"],
     ["Faculty", "#faculty"],
     ["Infrastructure", "#infrastructure"],
     ["Syllabus", "#syllabus"],
@@ -418,7 +418,7 @@ function setupAnnouncements() {
 }
 
 function typeHeroTitle() {
-  const kicker = "S. A. P. D. Jain Pathashala's";
+  const kicker = "S. A. P. D. Jain Pathshala's";
   const title = "Walchand Institute of Technology, Solapur";
   const subtitle = "An Autonomous Institute";
   const caret = '<span class="caret" aria-hidden="true"></span>';
@@ -717,49 +717,52 @@ setupFirstVisitPopup();
 
 // Slideshow Controller
 function initSlideshow() {
+  const container = document.querySelector(".slideshow-container");
   const slides = document.querySelectorAll(".slide");
   const dots = document.querySelectorAll(".dot");
   const prevBtn = document.querySelector(".slideshow-btn.prev");
   const nextBtn = document.querySelector(".slideshow-btn.next");
-  
+
+  if (slides.length === 0) return;
+
   let currentSlide = 0;
   let autoplayTimer = null;
 
   function showSlide(index) {
     const total = slides.length;
+    
+    // Looping bounds
+    if (index >= total) {
+      currentSlide = 0;
+    } else if (index < 0) {
+      currentSlide = total - 1;
+    } else {
+      currentSlide = index;
+    }
+
     slides.forEach((slide, i) => {
       slide.classList.remove("active", "prev", "next");
       if (dots[i]) dots[i].classList.remove("active");
-
-      const img = slide.querySelector("img");
-      if (img) {
-        img.style.animation = "none";
-        void img.offsetWidth;
-        img.style.animation = "";
-      }
     });
 
-    const activeIndex = index;
-    const prevIndex = (index - 1 + total) % total;
-    const nextIndex = (index + 1) % total;
+    const activeIndex = currentSlide;
+    const prevIndex = (currentSlide - 1 + total) % total;
+    const nextIndex = (currentSlide + 1) % total;
 
     slides[activeIndex].classList.add("active");
     slides[prevIndex].classList.add("prev");
     slides[nextIndex].classList.add("next");
 
     if (dots[activeIndex]) dots[activeIndex].classList.add("active");
-    currentSlide = index;
   }
 
   function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
+    showSlide(currentSlide + 1);
     resetAutoplay();
   }
 
   function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
+    showSlide(currentSlide - 1);
     resetAutoplay();
   }
 
@@ -769,7 +772,7 @@ function initSlideshow() {
   }
 
   function startAutoplay() {
-    autoplayTimer = setInterval(nextSlide, 4000);
+    autoplayTimer = setInterval(nextSlide, 4500);
   }
 
   if (nextBtn) nextBtn.addEventListener("click", nextSlide);
@@ -783,6 +786,29 @@ function initSlideshow() {
     });
   });
 
+  // Touch Support for mobile scrolling/swipe
+  let startX = 0;
+  let isSwiping = false;
+
+  container.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  }, { passive: true });
+
+  container.addEventListener("touchend", (e) => {
+    if (!isSwiping) return;
+    const endX = e.changedTouches[0].clientX;
+    const diffX = startX - endX;
+
+    if (diffX > 50) {
+      nextSlide();
+    } else if (diffX < -50) {
+      prevSlide();
+    }
+    isSwiping = false;
+  }, { passive: true });
+
+  // Initial render
   showSlide(0);
   startAutoplay();
 }
