@@ -780,13 +780,13 @@
           <div class="album-card-container" data-album-id="${album.id}">
             <div class="album-stack">
               <div class="stack-photo photo-under-1">
-                <img src="${imgBottom}" alt="Stack image bottom">
+                <img src="${imgBottom}" alt="Stack image bottom" loading="lazy">
               </div>
               <div class="stack-photo photo-under-2">
-                <img src="${imgMiddle}" alt="Stack image middle">
+                <img src="${imgMiddle}" alt="Stack image middle" loading="lazy">
               </div>
               <div class="stack-photo photo-top">
-                <img src="${imgTop}" alt="Stack image top">
+                <img src="${imgTop}" alt="Stack image top" loading="lazy">
               </div>
             </div>
             <div class="album-meta">
@@ -816,7 +816,7 @@
       photoGrid.innerHTML = currentAlbum.images.map((img, index) => `
         <div class="polaroid-card" data-index="${index}">
           <div class="polaroid-img-wrapper">
-            <img src="${img.src}" alt="${img.title}">
+            <img src="${img.src}" alt="${img.title}" loading="lazy">
           </div>
           <div class="polaroid-caption">
             <span class="polaroid-tag">${img.tag}</span>

@@ -509,10 +509,9 @@ body.modal-open {
   z-index: 1;
   max-width: none;
   min-height: 84px;
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 44px;
   margin: 0;
   padding: 0 8px;
   color: #ffffff;
@@ -558,15 +557,14 @@ body.modal-open {
 
 .brand img {
   height: 76px;
-  width: 600px;
+  width: auto;
   object-fit: contain;
   object-position: left center;
-  transition: height 240ms ease, max-width 240ms ease;
+  transition: height 240ms ease;
 }
 
 .site-header.scrolled .brand img {
   height: 62px;
-  max-width: 140px;
 }
 
 .brand strong {
@@ -588,8 +586,8 @@ body.modal-open {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 28px;
-  margin: 0;
+  gap: 16px;
+  margin-right: 20px;
   padding: 0;
   list-style: none;
 }
@@ -603,7 +601,7 @@ body.modal-open {
   color: #f0f0f0;
   background: transparent;
   border-radius: 0;
-  font-size: 18px;
+  font-size: 15.5px;
   font-weight: 700;
   white-space: nowrap;
   transition: color 180ms ease, background 180ms ease;
@@ -2209,6 +2207,15 @@ body.modal-open {
   color: var(--secondary-deep);
 }
 
+#visitorCount {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--secondary-deep);
+  margin: 6px 0 14px;
+  line-height: 1;
+  font-family: inherit;
+}
+
 .footer p,
 .footer a:not(.footer-brand) {
   color: var(--text-secondary);
@@ -2369,6 +2376,9 @@ body.modal-open {
     justify-content: space-between;
     min-height: 84px;
     padding: 0 18px;
+    background: var(--white) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow) !important;
   }
 
   .brand img {
@@ -2378,6 +2388,10 @@ body.modal-open {
 
   .menu-toggle {
     display: block;
+  }
+
+  .menu-toggle span {
+    background: #000000 !important;
   }
 
   .nav-list {
@@ -2413,12 +2427,21 @@ body.modal-open {
     justify-items: stretch !important;
   }
 
-  .nav-link {
+  .nav-list .nav-link,
+  .dept-nav-links .nav-link {
     width: 100% !important;
     justify-content: flex-start !important;
     min-height: 48px;
     padding: 0 10px;
     text-align: left !important;
+    color: #ffffff !important;
+  }
+
+  .nav-list .nav-link:hover,
+  .nav-list .nav-link.active,
+  .dept-nav-links .nav-link:hover,
+  .dept-nav-links .nav-link.active {
+    color: var(--sky-primary) !important;
   }
 
   .nav-link::after,
@@ -2539,6 +2562,11 @@ body.modal-open {
 
   .site-header.scrolled .navbar {
     margin: 0;
+    min-height: 72px;
+  }
+
+  .site-header.scrolled .brand img {
+    height: 56px;
   }
 
   .nav-list,
