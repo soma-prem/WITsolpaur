@@ -214,7 +214,7 @@ button {
   gap: 54px;
   white-space: nowrap;
   will-change: transform;
-  animation: announcementScroll 28s linear infinite;
+  animation: announcementScroll 95s linear infinite;
 }
 
 .announcement-track:hover {
