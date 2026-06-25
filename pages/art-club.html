@@ -4,167 +4,237 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Art Club | WIT Solapur</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/about-pages.css">
   <style>
-    /* Custom Slideshow Styles */
-    .slideshow-section {
-      max-width: 900px;
+    /* Custom Polaroid Gallery Board Styles */
+    .gallery-section {
+      max-width: 1200px;
       margin: 40px auto;
-      position: relative;
-      background: var(--white);
-      border-radius: 20px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 10px 30px rgba(15, 76, 129, 0.05);
+      padding: 0 16px;
     }
     
-    .slides-container {
+    .gallery-board {
+      background-color: #0f172a;
+      background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border-radius: 24px;
+      padding: 60px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 56px 40px;
+      box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(15, 76, 129, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       position: relative;
-      width: 100%;
-      height: 480px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #0f172a;
     }
     
-    .slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    .polaroid-card {
+      background: #ffffff;
+      padding: 16px 16px 48px 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      transform: rotate(var(--rotation, 0deg)) translateY(0);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  box-shadow 0.4s ease, 
+                  z-index 0s;
       z-index: 1;
     }
     
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      z-index: 2;
-    }
-    
-    .slide img {
+    .polaroid-card img {
       width: 100%;
-      height: 100%;
+      height: 280px;
       object-fit: cover;
-      transform: scale(1);
-      transition: transform 6s ease-out;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      background: #f8fafc;
     }
     
-    .slide.active img {
-      transform: scale(1.08); /* Ken Burns Zoom Effect */
+    /* Hover state: lift, straighten, and deepen shadow */
+    .polaroid-card:hover {
+      transform: rotate(0deg) scale(1.06) translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      z-index: 10;
     }
     
-    .slide-caption {
+    /* Tape overlay styling (semi-transparent beige/masking tape) */
+    .polaroid-card::before {
+      content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 40px 24px 24px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
-      color: #fff;
-      z-index: 3;
-      transform: translateY(20px);
-      opacity: 0;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 0.6s ease 0.2s;
+      width: 80px;
+      height: 28px;
+      background-color: rgba(244, 239, 225, 0.65);
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 3px 3px;
+      backdrop-filter: blur(1px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-left: 2px dashed rgba(0, 0, 0, 0.08);
+      border-right: 2px dashed rgba(0, 0, 0, 0.08);
+      z-index: 5;
+      pointer-events: none;
     }
     
-    .slide.active .slide-caption {
-      transform: translateY(0);
-      opacity: 1;
+    /* Organic rotations and tape locations for each Polaroid card */
+    .polaroid-card:nth-child(1) { --rotation: -4deg; }
+    .polaroid-card:nth-child(1)::before {
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-6deg);
     }
     
-    .slide-caption h3 {
-      margin: 0 0 6px 0;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.01em;
+    .polaroid-card:nth-child(2) { --rotation: 3deg; }
+    .polaroid-card:nth-child(2)::before {
+      top: -16px;
+      left: 30%;
+      transform: rotate(8deg);
     }
     
-    .slide-caption p {
-      margin: 0;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.8);
+    .polaroid-card:nth-child(3) { --rotation: -5deg; }
+    .polaroid-card:nth-child(3)::before {
+      top: -12px;
+      left: 60%;
+      transform: rotate(-10deg);
     }
     
-    /* Control Buttons */
-    .slider-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--secondary-deep);
-      border: 1px solid var(--border-color);
+    .polaroid-card:nth-child(4) { --rotation: 4deg; }
+    .polaroid-card:nth-child(4)::before {
+      top: -15px;
+      left: 45%;
+      transform: rotate(4deg);
+    }
+    
+    .polaroid-card:nth-child(5) { --rotation: -3deg; }
+    .polaroid-card:nth-child(5)::before {
+      top: -18px;
+      left: 35%;
+      transform: rotate(-7deg);
+    }
+    
+    .polaroid-card:nth-child(6) { --rotation: 5deg; }
+    .polaroid-card:nth-child(6)::before {
+      top: -14px;
+      left: 55%;
+      transform: rotate(5deg);
+    }
+    
+    /* Lightbox Modal styles */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
     
-    .slider-btn:hover {
-      background: var(--sky-primary);
-      color: #fff;
-      border-color: var(--sky-primary);
-      transform: translateY(-50%) scale(1.08);
-    }
-    
-    .slider-btn-prev { left: 32px; }
-    .slider-btn-next { right: 32px; }
-    
-    /* Thumbnails List */
-    .thumbnail-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-    
-    .thumb {
-      width: 80px;
-      height: 50px;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
-    
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .thumb:hover, .thumb.active {
+    .lightbox.active {
       opacity: 1;
-      border-color: var(--sky-primary);
-      transform: scale(1.05);
+      visibility: visible;
     }
-
+    
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 80%;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .lightbox.active .lightbox-content {
+      transform: scale(1);
+    }
+    
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 4px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      border: 8px solid #ffffff;
+    }
+    
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 3rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    
+    .lightbox-close:hover {
+      transform: scale(1.1);
+      color: var(--sky-primary);
+    }
+    
+    .lightbox-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      font-size: 1.8rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 3100;
+    }
+    
+    .lightbox-btn:hover {
+      background: var(--sky-primary);
+      border-color: var(--sky-primary);
+      color: #ffffff;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .lightbox-btn-prev {
+      left: 32px;
+    }
+    
+    .lightbox-btn-next {
+      right: 32px;
+    }
+    
+    /* Responsive styling */
     @media (max-width: 768px) {
-      .slides-container {
-        height: 320px;
+      .gallery-board {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 48px 30px;
+        padding: 40px 20px;
       }
-      .slider-btn {
-        width: 38px;
-        height: 38px;
+      
+      .polaroid-card img {
+        height: 240px;
       }
-      .slider-btn-prev { left: 12px; }
-      .slider-btn-next { right: 12px; }
-      .thumb {
-        width: 60px;
-        height: 38px;
+      
+      .lightbox-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.4rem;
       }
+      .lightbox-btn-prev { left: 16px; }
+      .lightbox-btn-next { right: 16px; }
     }
   </style>
 </head>
@@ -204,79 +274,49 @@
       <p class="subtitle">Fostering creativity, visual arts, and artistic expression among WIT students.</p>
     </header>
 
-    <section class="slideshow-section">
-      <!-- Slides -->
-      <div class="slides-container" id="slidesContainer">
-        <!-- Slide 1 -->
-        <div class="slide active">
-          <img src="../assets/images/clubs/art1.png" alt="Watercolor Landscape Painting">
-          <div class="slide-caption">
-            <h3>Watercolor Landscape</h3>
-            <p>A serene mountain landscape during sunset, utilizing soft blending and pastel hues.</p>
-          </div>
+    <section class="gallery-section">
+      <div class="gallery-board">
+        <!-- Polaroid Card 1 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/1.jpg" alt="Sketching Workshop">
         </div>
-        <!-- Slide 2 -->
-        <div class="slide">
-          <img src="../assets/images/clubs/art2.png" alt="Autumn Forest Oil Painting">
-          <div class="slide-caption">
-            <h3>Autumn Forest</h3>
-            <p>An oil painting depicting a forest in autumn, utilizing thick palette knife brushstrokes.</p>
-          </div>
+        <!-- Polaroid Card 2 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/2.jpg" alt="Canvas Paintings">
         </div>
-        <!-- Slide 3 -->
-        <div class="slide">
-          <img src="../assets/images/clubs/art3.png" alt="Charcoal Lion Sketch">
-          <div class="slide-caption">
-            <h3>Charcoal Lion Face</h3>
-            <p>A high-contrast charcoal sketch focusing on realistic detailing and dramatic shadows.</p>
-          </div>
+        <!-- Polaroid Card 3 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/3.jpg" alt="Exquisite Portraiture">
         </div>
-        <!-- Slide 4 -->
-        <div class="slide">
-          <img src="../assets/images/clubs/art4.png" alt="Acrylic Ocean Waves">
-          <div class="slide-caption">
-            <h3>Acrylic Ocean Waves</h3>
-            <p>A dynamic acrylic painting showing waves crashing against steep rocky cliffs.</p>
-          </div>
+        <!-- Polaroid Card 4 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/4.jpg" alt="Cultural & Folk Art">
         </div>
-        <!-- Slide 5 -->
-        <div class="slide">
-          <img src="../assets/images/clubs/art5.png" alt="Cosmic Nebula Digital Art">
-          <div class="slide-caption">
-            <h3>Cosmic Nebula</h3>
-            <p>A digital illustration detailing a gold and purple interstellar nebula in deep space.</p>
-          </div>
+        <!-- Polaroid Card 5 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/5.jpg" alt="Modern Abstract Art">
         </div>
-
-        <!-- Arrow Controls -->
-        <button class="slider-btn slider-btn-prev" id="prevBtn" type="button" aria-label="Previous Slide">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <button class="slider-btn slider-btn-next" id="nextBtn" type="button" aria-label="Next Slide">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-
-      <!-- Thumbnail Indicators -->
-      <div class="thumbnail-container" id="thumbContainer">
-        <div class="thumb active" data-index="0">
-          <img src="../assets/images/clubs/art1.png" alt="Thumbnail 1">
-        </div>
-        <div class="thumb" data-index="1">
-          <img src="../assets/images/clubs/art2.png" alt="Thumbnail 2">
-        </div>
-        <div class="thumb" data-index="2">
-          <img src="../assets/images/clubs/art3.png" alt="Thumbnail 3">
-        </div>
-        <div class="thumb" data-index="3">
-          <img src="../assets/images/clubs/art4.png" alt="Thumbnail 4">
-        </div>
-        <div class="thumb" data-index="4">
-          <img src="../assets/images/clubs/art5.png" alt="Thumbnail 5">
+        <!-- Polaroid Card 6 -->
+        <div class="polaroid-card">
+          <img src="../assets/images/artclub/6.jpg" alt="Exhibition Gallery">
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-btn lightbox-btn-prev" id="lightboxPrev" aria-label="Previous Image">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="Full size artwork">
+    </div>
+    <button class="lightbox-btn lightbox-btn-next" id="lightboxNext" aria-label="Next Image">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
 
   <!-- --- Footer --- -->
   <footer class="footer">
@@ -317,72 +357,72 @@
   <script src="../assets/js/main.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const slides = document.querySelectorAll(".slide");
-      const thumbs = document.querySelectorAll(".thumb");
-      const prevBtn = document.getElementById("prevBtn");
-      const nextBtn = document.getElementById("nextBtn");
-      let currentIndex = 0;
-      let slideInterval;
-      const intervalTime = 5000; // 5 seconds autoplay
-
-      function showSlide(index) {
-        // Remove active class from current slide and thumbnail
-        slides[currentIndex].classList.remove("active");
-        thumbs[currentIndex].classList.remove("active");
-
-        // Set index bounds
-        currentIndex = (index + slides.length) % slides.length;
-
-        // Add active class to new slide and thumbnail
-        slides[currentIndex].classList.add("active");
-        thumbs[currentIndex].classList.add("active");
+      const cards = document.querySelectorAll(".polaroid-card");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const closeBtn = document.getElementById("lightboxClose");
+      const prevBtn = document.getElementById("lightboxPrev");
+      const nextBtn = document.getElementById("lightboxNext");
+      let activeIndex = 0;
+      
+      const imagesList = Array.from(cards).map(card => {
+        const img = card.querySelector("img");
+        return img ? img.getAttribute("src") : "";
+      }).filter(src => src !== "");
+      
+      function openLightbox(index) {
+        activeIndex = index;
+        lightboxImg.src = imagesList[activeIndex];
+        lightbox.classList.add("active");
+        lightbox.setAttribute("aria-hidden", "false");
       }
-
-      function nextSlide() {
-        showSlide(currentIndex + 1);
+      
+      function closeLightbox() {
+        lightbox.classList.remove("active");
+        lightbox.setAttribute("aria-hidden", "true");
       }
-
-      function prevSlide() {
-        showSlide(currentIndex - 1);
+      
+      function showNext() {
+        activeIndex = (activeIndex + 1) % imagesList.length;
+        lightboxImg.src = imagesList[activeIndex];
       }
-
-      // Autoplay setup
-      function startAutoplay() {
-        stopAutoplay();
-        slideInterval = setInterval(nextSlide, intervalTime);
+      
+      function showPrev() {
+        activeIndex = (activeIndex - 1 + imagesList.length) % imagesList.length;
+        lightboxImg.src = imagesList[activeIndex];
       }
-
-      function stopAutoplay() {
-        if (slideInterval) clearInterval(slideInterval);
-      }
-
-      // Click Event Listeners for Controls
-      nextBtn.addEventListener("click", () => {
-        nextSlide();
-        startAutoplay(); // Reset timer
+      
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => openLightbox(index));
       });
-
-      prevBtn.addEventListener("click", () => {
-        prevSlide();
-        startAutoplay(); // Reset timer
+      
+      closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeLightbox();
       });
-
-      // Click Event Listeners for Thumbnails
-      thumbs.forEach((thumb) => {
-        thumb.addEventListener("click", () => {
-          const index = parseInt(thumb.getAttribute("data-index"));
-          showSlide(index);
-          startAutoplay(); // Reset timer
-        });
+      
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showNext();
       });
-
-      // Pause Autoplay on Hover
-      const slideshowSection = document.querySelector(".slideshow-section");
-      slideshowSection.addEventListener("mouseenter", stopAutoplay);
-      slideshowSection.addEventListener("mouseleave", startAutoplay);
-
-      // Start Autoplay Initially
-      startAutoplay();
+      
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showPrev();
+      });
+      
+      // Close on backdrop click
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      
+      // Keyboard controls
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("active")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") showNext();
+        if (e.key === "ArrowLeft") showPrev();
+      });
     });
   </script>
 </body>
