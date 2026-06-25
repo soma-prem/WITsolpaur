@@ -221,8 +221,15 @@ button {
   animation-play-state: paused;
 }
 
-.announcement-track span {
+.announcement-track span,
+.announcement-track a {
   flex: 0 0 auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.announcement-track a:hover {
+  text-decoration: underline;
 }
 
 .announcement-sidebar {
