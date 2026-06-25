@@ -174,12 +174,18 @@ const menus = {
     label: "Accreditation & Affiliation",
     headline: "IQAC, NAAC, NBA, NIRF, and ARIIA accreditations and rankings.",
     groups: [
-      ["Accreditation & Affiliation", [
+      ["Accreditation", [
         ["IQAC", "pages/accreditation/iqac.html"],
         ["NAAC", "pages/accreditation/naac.html"],
         ["NBA", "pages/accreditation/nba.html"],
-        ["NIRF", "pages/accreditation/nirf.html"],
-        ["ARIIA", "pages/accreditation/ariia.html"]
+        ["NDF", "pages/coming-soon.html"],
+        ["ARIIA", "pages/accreditation/ariia.html"],
+        ["NIRF", "pages/accreditation/nirf.html"]
+      ]],
+      ["Affiliation & Approval", [
+        ["AICTE Approval", "assets/documents/AICTE-Approval-Letters.pdf"],
+        ["UGC", "pages/coming-soon.html"],
+        ["University Affiliation", "pages/coming-soon.html"]
       ]]
     ]
   },
