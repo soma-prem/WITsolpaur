@@ -195,15 +195,9 @@ const menus = {
     groups: [
       ["Research Ecosystem", [
         ["Research Overview", "pages/research.html"], 
-        ["Innovation Entrepreneurship and IPR", "pages/innovation-ipr.html"], 
-        ["IQAC", "pages/accreditation/iqac.html"], 
-        ["NAAC", "pages/accreditation/naac.html"], 
-        ["NBA", "pages/accreditation/nba.html"]
+        ["Innovation Entrepreneurship and IPR", "pages/innovation-ipr.html"]
       ]],
       ["Approvals & Rankings", [
-        ["NIRF", "pages/accreditation/nirf.html"], 
-        ["ARIIA", "pages/accreditation/ariia.html"], 
-        ["AICTE Approvals", "assets/documents/AICTE-Approval-Letters.pdf"], 
         "Conference Proceedings"
       ]]
     ]
