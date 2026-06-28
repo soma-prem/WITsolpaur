@@ -57,12 +57,23 @@
       'CE':'Civil Engineering',
       'ENTC':'Electronics & Telecommunication',
       'AIML':'Artificial Intelligence & Machine Learning',
-      'ECS':'Electronics & Computer Engineering'
+      'ECS':'Electronics & Computer Engineering',
+      'ALUMNI':'Alumni Portal',
+      'WITCHAR':'WITchar 2k27'
     };
-    const name = mapping[dept.toUpperCase()] || (dept ? dept : 'Department');
+    const name = mapping[dept.toUpperCase()] || (dept ? dept : 'Page');
     document.getElementById('deptBadge').textContent = name;
     document.getElementById('deptTitle').textContent = name + ' — Coming Soon';
-    document.getElementById('deptSub').textContent = 'The ' + name + ' page is under construction. Check back soon for department details, faculty profiles, syllabus and more.';
+    
+    let subText = 'The ' + name + ' page is under construction. Check back soon for details.';
+    if (dept.toUpperCase() === 'ALUMNI') {
+      subText = 'The Alumni Portal is under construction. Check back soon for alumni registration, networking features, and alumni meet updates.';
+    } else if (dept.toUpperCase() === 'WITCHAR') {
+      subText = 'The WITchar 2k27 page is under construction. Check back soon for event registration, schedules, guidelines, and competition details.';
+    } else if (mapping[dept.toUpperCase()] && !['ALUMNI', 'WITCHAR'].includes(dept.toUpperCase())) {
+      subText = 'The ' + name + ' department page is under construction. Check back soon for department details, faculty profiles, syllabus, and more.';
+    }
+    document.getElementById('deptSub').textContent = subText;
   </script>
   <script src="../assets/js/main.js"></script>
 </body>

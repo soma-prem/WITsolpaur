@@ -29,7 +29,7 @@ if (pathname.includes("/pages/")) {
   rootPrefix = "../" + "../".repeat(depth);
 }
 
-// Dynamically insert Accreditation, Training & Placement, and Alumni tabs into the navbar
+// Dynamically insert Accreditation, Training & Placement, Alumni, and Important Links tabs into the navbar
 if (navList) {
   const academicsLi = Array.from(navList.children).find(li => {
     const trigger = li.querySelector('[data-menu="academics"]');
@@ -38,7 +38,7 @@ if (navList) {
   if (academicsLi) {
     if (!navList.querySelector('[data-menu="accreditation"]')) {
       const accreditationLi = document.createElement("li");
-      accreditationLi.innerHTML = `<button class="nav-link menu-trigger" type="button" data-menu="accreditation">Accreditation & Affiliation</button>`;
+      accreditationLi.innerHTML = `<button class="nav-link menu-trigger" type="button" data-menu="accreditation">Accreditation</button>`;
       academicsLi.after(accreditationLi);
     }
   }
@@ -54,8 +54,20 @@ if (navList) {
       campusLi.after(placementLi);
 
       const alumniLi = document.createElement("li");
-      alumniLi.innerHTML = `<a class="nav-link" href="#">Alumni</a>`;
+      alumniLi.innerHTML = `<a class="nav-link" href="${rootPrefix}pages/coming-soon.html?dept=alumni">Alumni</a>`;
       placementLi.after(alumniLi);
+    }
+  }
+
+  const contactLi = Array.from(navList.children).find(li => {
+    const trigger = li.querySelector('[data-menu="contact"]');
+    return trigger !== null;
+  });
+  if (contactLi) {
+    if (!navList.querySelector('[data-menu="important_links"]')) {
+      const importantLinksLi = document.createElement("li");
+      importantLinksLi.innerHTML = `<button class="nav-link menu-trigger" type="button" data-menu="important_links">Important Links</button>`;
+      contactLi.before(importantLinksLi);
     }
   }
 }
@@ -171,7 +183,7 @@ const menus = {
     ]
   },
   accreditation: {
-    label: "Accreditation & Affiliation",
+    label: "Accreditation",
     headline: "IQAC, NAAC, NBA, NIRF, and ARIIA accreditations and rankings.",
     groups: [
       ["Accreditation", [
@@ -198,7 +210,7 @@ const menus = {
         ["Innovation Entrepreneurship and IPR", "pages/innovation-ipr.html"]
       ]],
       ["Approvals & Rankings", [
-        "Conference Proceedings"
+        ["Conference Proceedings", "assets/documents/research/conferenc_preceedings.pdf"]
       ]]
     ]
   },
@@ -206,7 +218,7 @@ const menus = {
     label: "Campus Life",
     headline: "Events, clubs, WITchar, e-store, and career opportunities.",
     groups: [
-      ["Life at WIT", [["Events", "pages/gallery.html"], "WITchar 2k26", ["WIT E-Store", "https://www.printvenue.com/collections/cs-wit"], ["Career", "pages/career.html"]]],
+      ["Life at WIT", [["Events", "pages/gallery.html"], ["WITchar 2k27", "pages/coming-soon.html?dept=witchar"], ["WIT E-Store", "https://www.printvenue.com/collections/cs-wit"], ["Career", "pages/career.html"]]],
       ["Clubs", [
         ["Art Club", "pages/art-club.html"],
         ["Google Developers Group", "https://gdg.community.dev/gdg-on-campus-walchand-institute-of-technology-solapur-india/"],
@@ -229,6 +241,26 @@ const menus = {
         ["2024-25(May-2025)", "pages/academics/timetable.html?session=2024-25(May-2025)"],
         ["2024-25(Nov-2024)", "pages/academics/timetable.html?session=2024-25(Nov-2024)"],
         ["2023-24", "pages/academics/timetable.html?session=2023-24"]
+      ]]
+    ]
+  },
+  important_links: {
+    label: "Important Links",
+    headline: "Statutory committees, strategic planning, UGC compliance, and statement of accounts.",
+    groups: [
+      ["Statutory Committees", [
+        ["Anti-Ragging Committee", "assets/documents/importan_links/ANTI-RAGGING-COMMITTEE.pdf"],
+        ["Internal Complaints Committee", "assets/documents/importan_links/INTERNAL-COMPLAINTS-COMMITTEE.pdf"],
+        ["College Development Committee", "assets/documents/importan_links/College-Development-Committee.pdf"],
+        ["Student Grievance Redressal Committee", "assets/documents/importan_links/STUDENT-GRIEVANCE-REDRESSAL-COMMITTEE.pdf"],
+        ["SC/ST Committee", "assets/documents/importan_links/SC_ST%20COMMITTEE.pdf"],
+        ["Staff Grievance Redressal Committee", "assets/documents/importan_links/STAFF-GRIEVANCE-REDRESSAL-COMMITTEE.pdf"]
+      ]],
+      ["Compliance & Disclosures", [
+        ["Strategic Management", "assets/documents/importan_links/Strategic-Management.pdf"],
+        ["Undertaking Submitted to UGC regarding Compliance of Guidelines", "assets/documents/importan_links/Undertaking-Compliance-of-Guidelines-of-UGC.pdf"],
+        ["Observance of Partition Horrors Remembrance Day", "assets/documents/importan_links/Partition-rembrance-day.pdf"],
+        ["Statement of Accounts", "pages/about/statement-of-accounts.html"]
       ]]
     ]
   },

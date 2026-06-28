@@ -1663,13 +1663,14 @@ body.modal-open {
 
 .about-points span,
 .pill-list span {
-  padding: 10px 16px;
+  padding: 8px 14px;
   border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: 888px;
   color: var(--white);
   background: linear-gradient(135deg, var(--sky-primary), var(--secondary-royal));
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .about-cta {
@@ -3046,3 +3047,16 @@ body.modal-open {
     display: none; /* Hide controls on smaller screens, rely on dots & swipe */
   }
 }
+
+/* Responsive Navbar overrides for intermediate desktop screen widths to fit all 12 items */
+@media (min-width: 1161px) and (max-width: 1366px) {
+  .nav-list,
+  .about-page .dept-nav-links {
+    gap: 10px !important;
+    margin-right: 12px !important;
+  }
+  .nav-link {
+    font-size: 14.5px !important;
+  }
+}
+
