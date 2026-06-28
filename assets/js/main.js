@@ -150,14 +150,14 @@ const menus = {
         ["Best Practices", "#academics-bestpractices"]
       ]],
       ["Departments", [
-        ["Computer Science & Engineering", "cse"],
-        ["Information Technology", "it"],
-        ["Mechanical Engineering", "me"],
-        ["Civil Engineering", "ce"],
-        ["Electronics & Telecommunication", "entc"],
         ["Artificial Intelligence & Machine Learning", "aiml"],
+        ["Civil Engineering", "ce"],
+        ["Computer Science & Engineering", "cse"],
         ["Electronics & Computer Engineering", "ecs"],
-        ["General Engineering", "ge"]
+        ["Electronics & Telecommunication", "entc"],
+        ["General Engineering", "ge"],
+        ["Information Technology", "it"],
+        ["Mechanical Engineering", "me"]
       ]]
     ]
   },
