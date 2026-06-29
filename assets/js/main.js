@@ -560,6 +560,10 @@ document.querySelectorAll(".menu-trigger").forEach((trigger) => {
   });
 });
 
+document.querySelectorAll(".site-header .nav-link:not(.menu-trigger)").forEach((link) => {
+  link.addEventListener("mouseenter", closeMegaMenu);
+});
+
 function switchAcademicsSubtab(href, link) {
   if (link.classList.contains("subtab-active")) return;
 
